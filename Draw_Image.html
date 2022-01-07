@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Draw an uploaded image to a Canva </title>
+    </head>
+    <body>
+        <div>
+            <input type="file" id="imageInput" accept="image/*">
+            <canvas id="myCanvas" width="1000" height="700"></canvas>
+        </div>
+         
+    </body>
+</html>
+<script>
+    let imgInput = document.getElementById('imageInput');
+    imgInput.addEventListener('change' , function(Event){
+        if(Event.target.files){
+            let imageFile = Event.target.files[0];
+            var reader = new FileReader();
+            reader.onload=function(Event){
+                var img=new Image();
+                img.onload=function(Event){
+                    var myCanvas = document.getElementById("myCanvas");
+                    var mycontext = myCanvas.getContext("2d");
+                    myCanvas.width = img.width;
+                    myCanvas.height= img.height;
+                    mycontext.drawImage(img,0,0);
+                    let imgData = myCanvas.toDataURL("image/jpeg",0.75);
+                }
+
+            }
+            img.src=Event.target.result;
+        }
+    }
+</script>
+
